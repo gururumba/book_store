@@ -19,4 +19,8 @@ public interface UserService {
     User findUser(int id);
 
     List<User> findAllUsers();
+
+    User register(UserDtoPassword userDto);
+
+    User getCurrentUser();
 }

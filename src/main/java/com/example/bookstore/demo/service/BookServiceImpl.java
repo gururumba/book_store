@@ -1,11 +1,11 @@
 package com.example.bookstore.demo.service;
 
 import com.example.bookstore.demo.model.Book;
+import com.example.bookstore.demo.model.Writer;
 import com.example.bookstore.demo.model.dto.BookDto;
-import com.example.bookstore.demo.model.dto.BookDtoPassword;
 import com.example.bookstore.demo.repository.BookRepository;
+import com.example.bookstore.demo.repository.WriterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,13 +15,15 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     BookRepository bookRepository;
+    WriterRepository writerRepository;
 
     @Override
     public Book createBook(BookDto bookDto) {
         Book book = new Book();
         book.setDescription(bookDto.getDescription());
         book.setTitle(bookDto.getTitle());
-        book.setWriter(bookDto.getWriter());
+        Writer writer = writerRepository.findById(bookDto.getWriter()).get();
+        book.setWriter(writer);
 
         return bookRepository.save(book);
     }
@@ -34,10 +36,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book editBook(BookDtoPassword bookDto) {
+    public Book editBook(BookDto bookDto) {
         Book book = bookRepository.findById(bookDto.getId()).get();
 
-        book.setWriter(bookDto.getWriter());
+        Writer writer = writerRepository.findById(bookDto.getWriter()).get();
+        book.setWriter(writer);
         book.setTitle(bookDto.getTitle());
         book.setDescription(bookDto.getDescription());
 
@@ -50,7 +53,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findBooks() {
+    public List<Book> searchBooks() {
         return bookRepository.findAll();
     }
 }

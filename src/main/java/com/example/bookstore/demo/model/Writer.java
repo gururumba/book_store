@@ -20,9 +20,4 @@ public class Writer {
     private String firstName;
     private String lastName;
 
-    @OneToMany(mappedBy = "writer")
-    private List<Book> books;
-
-
-
 }

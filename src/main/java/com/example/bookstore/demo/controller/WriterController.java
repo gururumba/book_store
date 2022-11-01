@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController(value = "/api/writer")
+@RestController
+@RequestMapping(value = "/api/writer")
 public class WriterController {
 
     @Autowired
@@ -37,7 +38,7 @@ public class WriterController {
         return new ResponseEntity<WriterDto>(new WriterDto(writer),HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping(path = "/{id}")
     public ResponseEntity<?> findWriter(@PathVariable int id){
         Writer writer = writerService.findWriter(id);
         return new ResponseEntity<WriterDto>(new WriterDto(writer),HttpStatus.OK);

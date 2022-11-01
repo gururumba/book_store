@@ -10,12 +10,12 @@ public class BookDto {
     private int id;
     private String title;
     private String description;
-    private Writer writer;
+    private int writer;
 
     public BookDto(Book book){
         this.id = book.getId();
         this.title = book.getTitle();
         this.description = book.getDescription();
-        this.writer = book.getWriter();
+        this.writer = book.getWriter().getId();
     }
 }

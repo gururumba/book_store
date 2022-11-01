@@ -19,7 +19,6 @@ public class WriterServiceImpl implements WriterService{
 
         writer.setFirstName(writerDto.getFirstName());
         writer.setLastName(writerDto.getLastName());
-        writer.setBooks(writerDto.getBooks());
 
         return writer;
     }
@@ -36,7 +35,6 @@ public class WriterServiceImpl implements WriterService{
     public Writer editWriter(WriterDto writerDto) {
         Writer writer = writerRepository.findById(writerDto.getId()).get();
 
-        writer.setBooks(writerDto.getBooks());
         writer.setLastName(writerDto.getLastName());
         writer.setFirstName(writerDto.getFirstName());
 

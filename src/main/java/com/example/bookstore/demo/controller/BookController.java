@@ -1,10 +1,7 @@
 package com.example.bookstore.demo.controller;
 
 import com.example.bookstore.demo.model.Book;
-import com.example.bookstore.demo.model.Writer;
 import com.example.bookstore.demo.model.dto.BookDto;
-import com.example.bookstore.demo.model.dto.BookDtoPassword;
-import com.example.bookstore.demo.model.dto.WriterDto;
 import com.example.bookstore.demo.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,18 +30,18 @@ public class BookController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editBook(@RequestBody BookDtoPassword bookDtoPassword){
-        Book book = bookService.editBook(bookDtoPassword);
+    public ResponseEntity<?> editBook(@RequestBody BookDto bookDto){
+        Book book = bookService.editBook(bookDto);
         return new ResponseEntity<BookDto>(new BookDto(book),HttpStatus.OK);
     }
-    @GetMapping
-    public ResponseEntity<?> findBook(@RequestParam int id){
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<?> findBook(@PathVariable int id){
         Book book = bookService.findBook(id);
         return new ResponseEntity<BookDto>(new BookDto(book),HttpStatus.OK);
     }
     @GetMapping
-    public ResponseEntity<?> findBooks(){
-        List<Book> bookList = bookService.findBooks();
+    public ResponseEntity<?> searchBooks(){
+        List<Book> bookList = bookService.searchBooks();
 
         List<BookDto> bookDtos = new ArrayList<>();
         for(Book book : bookList){

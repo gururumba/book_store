@@ -2,8 +2,6 @@ package com.example.bookstore.demo.service;
 
 import com.example.bookstore.demo.model.Book;
 import com.example.bookstore.demo.model.dto.BookDto;
-import com.example.bookstore.demo.model.dto.BookDtoPassword;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +13,9 @@ public interface BookService {
 
     public boolean deleteBook(int id);
 
-    public Book editBook(BookDtoPassword bookDto);
+    public Book editBook(BookDto bookDto);
 
     Book findBook(int id);
 
-    List<Book> findBooks();
+    List<Book> searchBooks();
 }

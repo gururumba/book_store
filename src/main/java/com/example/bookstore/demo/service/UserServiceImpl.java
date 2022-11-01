@@ -1,17 +1,27 @@
 package com.example.bookstore.demo.service;
 
+import com.example.bookstore.demo.config.SecurityUtil;
 import com.example.bookstore.demo.model.User;
+import com.example.bookstore.demo.model.UserType;
 import com.example.bookstore.demo.model.dto.UserDto;
 import com.example.bookstore.demo.model.dto.UserDtoPassword;
 import com.example.bookstore.demo.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public User createUser(UserDto userDto) {
         User user = new User();
@@ -51,5 +61,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User register(UserDtoPassword userDto) {
+
+        User user = userRepository.getByEmail(userDto.getEmail());
+        if(user != null){
+            return null;
+        }
+        user = new User();
+        user.setEmail(userDto.getEmail());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(user.getLastName());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setType(UserType.EMPLOYEE);
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        String email = SecurityUtil.getCurrentUserLogin().get();
+
+        return userRepository.getByEmail(email);
     }
 }

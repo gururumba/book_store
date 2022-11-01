@@ -11,12 +11,10 @@ public class WriterDto {
     private int id;
     private String firstName;
     private String lastName;
-    private List<Book> books;
+
 
     public WriterDto(Writer writer){
         this.firstName = writer.getFirstName();
         this.lastName = writer.getLastName();
-        this.books = writer.getBooks();
-        this.id = writer.getId();
     }
 }
